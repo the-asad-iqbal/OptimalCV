@@ -1,13 +1,14 @@
-import { useState } from "react";
+import React from "react";
+import Home from "./pages/Home";
+import NavBar from "./components/NavBar";
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div className="App text-4xl">
-      <button onClick={() => setCount(count + 1)}>count is: {count}</button>
-    </div>
-  );
-}
+const App = () => {
+   return (
+      <div>
+         <NavBar/>
+         <Home />
+      </div>
+   );
+};
 
 export default App;
