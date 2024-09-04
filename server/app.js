@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import fs from "fs";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { GoogleAIFileManager } from "@google/generative-ai/server";
 import { configDotenv } from "dotenv";
 
 configDotenv();
