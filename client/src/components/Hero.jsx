@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CloudUploadIcon } from "lucide-react";
+import { CloudUpload } from "lucide-react";
 
 const HeroSection = () => {
    const [file, setFile] = useState(null);
@@ -10,8 +10,22 @@ const HeroSection = () => {
 
    const handleUpload = async (e) => {
       e.preventDefault();
-      if (file) {
-         console.log(file);
+      if (!file) return;
+      console.log(file);
+
+      const formData = new FormData();
+      formData.append("resume", file);
+
+      try {
+         const response = await fetch("http://localhost:3000/api/v1/upload/file", {
+            method: "POST",
+            body: formData,
+         });
+
+         const data = await response.json();
+         console.log(data);
+      } catch (error) {
+         console.error("Error uploading file:", error);
       }
    };
 
@@ -43,7 +57,7 @@ const HeroSection = () => {
                      type="submit"
                   >
                      Upload
-                     <CloudUploadIcon className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
+                     <CloudUpload className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
                   </button>
                </form>
             </div>
