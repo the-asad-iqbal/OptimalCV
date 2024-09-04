@@ -25,10 +25,18 @@ const HeroSection = () => {
                <div className="flex justify-center items-center space-x-8">
                   {/* Replace with actual company logos */}
                   <div className="w-20 h-20 bg-darkCharcoal rounded-full">
-                     <img src="https://picsum.photos/id/237/200" alt="" />
+                     {/* avatar */}
+                     <img src="https://avatars.githubusercontent.com/u/114034?v=4" className="rounded-full" />
                   </div>
-                  <div className="w-20 h-20 bg-darkCharcoal rounded-full"></div>
-                  <div className="w-20 h-20 bg-darkCharcoal rounded-full"></div>
+                  <div className="w-20 h-20 bg-darkCharcoal rounded-full">
+                  <img src="https://avatars.githubusercontent.com/u/114033?v=4" className="rounded-full" />
+
+                  </div>
+                  <div className="w-20 h-20 bg-darkCharcoal rounded-full">
+
+                  <img src="https://avatars.githubusercontent.com/u/114032?v=4" className="rounded-full" />
+
+                  </div>
                </div>
             </div>
          </div>
