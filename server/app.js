@@ -3,6 +3,8 @@ import cors from "cors";
 import fs from "fs";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { configDotenv } from "dotenv";
+import multer from "multer";
+import path from "path";
 
 configDotenv();
 const app = express();
@@ -29,6 +31,6 @@ const prompt =
 const imagePart = fileToGenerativePart(`./public/jetpack.jpg`, "image/jpeg");
 
 const result = await model.generateContent([prompt, imagePart]);
-console.log(result.response.text());
+
 
 app.listen(3000, () => console.log("Server started on port 3000"));
