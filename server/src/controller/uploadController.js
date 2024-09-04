@@ -30,7 +30,7 @@ const uploadController = async (req, res) => {
       return res.status(200).json(pdfToImages);
    }
 
-   return res.status(200).json(req.file);
+   return res.status(200).json([req.file]);
 };
 
 export { uploadController };

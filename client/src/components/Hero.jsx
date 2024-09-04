@@ -23,7 +23,23 @@ const HeroSection = () => {
          });
 
          const data = await response.json();
-         console.log(data);
+         if (response.ok) {
+            const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                  files: data,
+               }),
+            });
+
+            const result = await newRes.json();
+
+            if (newRes.ok) {
+               console.log(result);
+            }
+         }
       } catch (error) {
          console.error("Error uploading file:", error);
       }
