@@ -58,8 +58,9 @@ const HeroSection = () => {
    };
 
    return (
-      <div className="flex items-center justify-between text-lightGray w-full flex-col overflow-x-hidden overflow-y-auto h-full">
-         <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center bg-[url('./intersect.png')] min-h-[60vh] p-10 h-full">
+      <div className="flex flex-col items-center justify-center text-lightGray w-full overflow-x-hidden overflow-y-auto h-screen">
+
+         <div className="max-w-7xl w-full mx-auto text-center p-10 h-screen flex flex-col items-center justify-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 line-clamp-6">
                Optimize your <span className="text-purple">CV!!</span>
             </h1>
@@ -94,11 +95,13 @@ const HeroSection = () => {
             </div>
          </div>
 
-         {resData && !isUploading && Object.keys(resData).length > 0 ? (
+
+
+         {/* {resData && !isUploading && Object.keys(resData).length > 0 ? (
             <Audit resData={resData} />
          ) : (
             showLoader && <Skelton />
-         )}
+         )} */}
       </div>
    );
 };
