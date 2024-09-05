@@ -5,6 +5,7 @@ import Audit from "./Audit";
 const HeroSection = () => {
    const [file, setFile] = useState(null);
    const [resData, setResData] = useState({});
+   const [isUploading, setIsUploading] = useState(false);
 
    const handleFileChange = (e) => {
       setFile(e.target.files[0]);
@@ -26,21 +27,24 @@ const HeroSection = () => {
 
          const data = await response.json();
          if (response.ok) {
-            const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
-               method: "POST",
-               headers: {
-                  "Content-Type": "application/json",
-               },
-               body: JSON.stringify({
-                  files: data,
-               }),
-            });
+            
+            setIsUploading(true);
 
-            const result = await newRes.json();
+            // const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
+            //    method: "POST",
+            //    headers: {
+            //       "Content-Type": "application/json",
+            //    },
+            //    body: JSON.stringify({
+            //       files: data,
+            //    }),
+            // });
 
-            if (newRes.ok) {
-               setResData(result);
-            }
+            // const result = await newRes.json();
+
+            // if (newRes.ok) {
+            //    setResData(result);
+            // }
          }
       } catch (error) {
          console.error("Error uploading file:", error);
