@@ -59,7 +59,6 @@ const HeroSection = () => {
 
    return (
       <div className="flex flex-col items-center justify-center text-lightGray w-full overflow-x-hidden overflow-y-auto h-screen">
-
          <div className="max-w-7xl w-full mx-auto text-center p-10 h-screen flex flex-col items-center justify-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 line-clamp-6">
                Optimize your <span className="text-purple">CV!!</span>
@@ -94,8 +93,6 @@ const HeroSection = () => {
                </form>
             </div>
          </div>
-
-
 
          {/* {resData && !isUploading && Object.keys(resData).length > 0 ? (
             <Audit resData={resData} />
