@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { CloudUpload } from "lucide-react";
 
 import Audit from "./Audit";
+import Skelton from "./Skelton";
 
 const HeroSection = () => {
    const [file, setFile] = useState(null);
    const [resData, setResData] = useState({});
    const [isUploading, setIsUploading] = useState(false);
+   const [showLoader, setShowLoader] = useState(false);
 
    const handleFileChange = (e) => {
       setFile(e.target.files[0]);
@@ -30,6 +32,8 @@ const HeroSection = () => {
          const data = await response.json();
          try {
             if (response.ok) {
+               setShowLoader(true);
+               setIsUploading(false);
                const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
                   method: "POST",
                   headers: {
@@ -42,8 +46,8 @@ const HeroSection = () => {
                const result = await newRes.json();
                if (newRes.ok) {
                   setResData(result);
+                  setShowLoader(false);
                }
-               setIsUploading(false);
             }
          } catch (error) {
             console.log(error);
@@ -54,14 +58,12 @@ const HeroSection = () => {
    };
 
    return (
-      <div className="bg-gradient-to-br from-black to-purple/5 h-screen flex items-center justify-center font-poppins text-lightGray w-full relative flex-col min-h-screen">
-         <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center bg-[url('./intersect.png')]">
+      <div className="flex items-center justify-between text-lightGray w-full flex-col overflow-x-hidden overflow-y-auto h-full">
+         <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center bg-[url('./intersect.png')] min-h-[60vh] p-10 h-full">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 line-clamp-6">
                Optimize your <span className="text-purple">CV!!</span>
-               <br />
-               with <span className="text-purple">Optimal CV</span>
             </h1>
-            <p className="text-xl sm:text-2xl mb-12 max-w-3xl mx-auto text-gray">
+            <p className="text-xl sm:text-2xl mb-12 max-w-3xl mx-auto text-lightGray opacity-55">
                Craft a professional resume that stands out and lands you your dream job.
             </p>
             <div className="flex flex-col items-center justify-center gap-4">
@@ -92,7 +94,11 @@ const HeroSection = () => {
             </div>
          </div>
 
-         {resData && Object.keys(resData).length > 0 && <Audit resData={resData} />}
+         {resData && !isUploading && Object.keys(resData).length > 0 ? (
+            <Audit resData={resData} />
+         ) : (
+            showLoader && <Skelton />
+         )}
       </div>
    );
 };

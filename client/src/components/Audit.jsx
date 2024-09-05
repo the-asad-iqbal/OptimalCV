@@ -9,10 +9,10 @@ const Audit = ({ resData }) => {
    const { res } = resData;
 
    return (
-      <div className="bg-gray-100 min-h-screen p-8 text-black">
+      <div className="p-8 bg-gradient-to-br from-black to-purple/5 w-full text-darkGray">
          <div className="max-w-6xl mx-auto">
             <header className="bg-white p-6 rounded-lg shadow-md mb-8">
-               <h1 className="text-3xl font-bold mb-2">{res.personalInfo.name}</h1>
+               <h1 className="text-3xl font-bold mb-2 text-purple">{res.personalInfo.name}</h1>
                <p className="text-xl text-gray-600 mb-1">{res.personalInfo.role}</p>
                <p className="text-sm text-gray-500">{res.personalInfo.email}</p>
             </header>
@@ -24,7 +24,7 @@ const Audit = ({ resData }) => {
                      score={res.overallScore.score}
                      outOf={res.overallScore.scoreOutOf}
                      commentary={res.overallScore.interpretation}
-                  />
+                  /> 
                </SectionWithIcon>
 
                <SectionWithIcon icon={Layout} title="Resume Layout">

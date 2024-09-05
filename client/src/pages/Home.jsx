@@ -4,7 +4,7 @@ import Audit from "../components/Audit";
 
 const Home = () => {
    return (
-      <div>
+      <div className="overflow-x-hidden">
          <Hero />
       </div>
    );
