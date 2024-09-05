@@ -7,11 +7,10 @@ const createCompletion = async (req, res) => {
    const { files } = req.body;
 
    const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-   console.log(process.env.API_KEY);
 
    const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
-      systemInstruction: `You are an expert in resume analysis. You will receive a resume and respond with a detailed audit, including deep-dive analysis into each section of the resume, such as strengths, weaknesses, suggestions for improvement, and scores.`,
+      systemInstruction: `You are an expert in resume analysis. You will receive a resume and respond with a detailed audit, including deep-dive analysis into each section of the resume, such as strengths, weaknesses, suggestions for improvement, and a score.`,
       generationConfig: {
          responseMimeType: "application/json",
          responseSchema: {
@@ -20,162 +19,69 @@ const createCompletion = async (req, res) => {
                personalInfo: {
                   type: SchemaType.OBJECT,
                   properties: {
-                     name: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           firstName: { type: SchemaType.STRING },
-                           lastName: { type: SchemaType.STRING },
-                           firstNameExists: { type: SchemaType.BOOLEAN },
-                           lastNameExists: { type: SchemaType.BOOLEAN },
-                        },
-                        required: ["firstName", "lastName", "firstNameExists", "lastNameExists"],
-                     },
+                     name: { type: SchemaType.STRING },
+                     email: { type: SchemaType.STRING },
                      role: { type: SchemaType.STRING },
-                     contact: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           email: { type: SchemaType.STRING },
-                           phone: { type: SchemaType.STRING },
-                           emailExists: { type: SchemaType.BOOLEAN },
-                           phoneExists: { type: SchemaType.BOOLEAN },
-                        },
-                        required: ["email", "emailExists", "phoneExists"],
-                     },
-                     location: { type: SchemaType.STRING },
-                     links: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           linkedIn: { type: SchemaType.STRING },
-                           portfolio: { type: SchemaType.STRING },
-                           linkedInExists: { type: SchemaType.BOOLEAN },
-                           portfolioExists: { type: SchemaType.BOOLEAN },
-                        },
-                     },
                   },
-                  required: ["name", "role", "email", "emailExists", "phoneExists"],
                },
-               visualAnalysis: {
+               isGoodResumeLayout: {
                   type: SchemaType.OBJECT,
                   properties: {
-                     overallDesign: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           comments: { type: SchemaType.STRING },
-                           strengths: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                           weaknesses: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                        },
-                     },
-                     colorScheme: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           primaryColors: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                           suitability: { type: SchemaType.STRING },
-                        },
-                     },
-                     typography: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           mainFont: { type: SchemaType.STRING },
-                           headerFont: { type: SchemaType.STRING },
-                           readability: { type: SchemaType.STRING },
-                           consistency: { type: SchemaType.STRING },
-                        },
-                     },
-                     layout: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           structure: { type: SchemaType.STRING },
-                           whitespace: { type: SchemaType.STRING },
-                           sectionOrganization: { type: SchemaType.STRING },
-                        },
-                     },
-                     visualHierarchy: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           effectiveness: { type: SchemaType.STRING },
-                           improvements: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                        },
+                     score: { type: SchemaType.NUMBER },
+                     scoreOutOf: { type: SchemaType.NUMBER },
+                     reason: { type: SchemaType.STRING },
+                     isGoodLayout: { type: SchemaType.BOOLEAN },
+                  },
+               },
+               strengths: {
+                  type: SchemaType.ARRAY,
+                  items: {
+                     type: SchemaType.OBJECT,
+                     properties: {
+                        section: { type: SchemaType.STRING }, // e.g., "Experience", "Skills"
+                        details: { type: SchemaType.STRING }, // Detailed explanation
                      },
                   },
                },
-               contentAnalysis: {
+               weaknesses: {
+                  type: SchemaType.ARRAY,
+                  items: {
+                     type: SchemaType.OBJECT,
+                     properties: {
+                        section: { type: SchemaType.STRING },
+                        details: { type: SchemaType.STRING },
+                        impact: { type: SchemaType.STRING }, // How this affects the overall impression
+                     },
+                  },
+               },
+               suggestions: {
+                  type: SchemaType.ARRAY,
+                  items: {
+                     type: SchemaType.OBJECT,
+                     properties: {
+                        suggestedPartName: { type: SchemaType.STRING },
+                        action: { type: SchemaType.STRING }, // Suggested action or improvement
+                        benefit: { type: SchemaType.STRING }, // How this will improve the resume
+                     },
+                  },
+               },
+               overallScore: {
                   type: SchemaType.OBJECT,
                   properties: {
-                     professionalSummary: {
+                     score: { type: SchemaType.NUMBER },
+                     scoreOutOf: { type: SchemaType.NUMBER },
+                     interpretation: { type: SchemaType.STRING }, // e.g., "Excellent", "Needs Improvement"
+                  },
+               },
+               sectionScores: {
+                  type: SchemaType.OBJECT,
+                  properties: {
+                     experience: {
                         type: SchemaType.OBJECT,
                         properties: {
                            score: { type: SchemaType.NUMBER },
                            scoreOutOf: { type: SchemaType.NUMBER },
-                           impactfulness: { type: SchemaType.STRING },
-                           clarity: { type: SchemaType.STRING },
-                           relevance: { type: SchemaType.STRING },
-                           suggestions: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                        },
-                     },
-                     workExperience: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           overallScore: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           jobEntries: {
-                              type: SchemaType.ARRAY,
-                              items: {
-                                 type: SchemaType.OBJECT,
-                                 properties: {
-                                    company: { type: SchemaType.STRING },
-                                    position: { type: SchemaType.STRING },
-                                    duration: { type: SchemaType.STRING },
-                                    score: { type: SchemaType.NUMBER },
-                                    scoreOutOf: { type: SchemaType.NUMBER },
-                                    impactStatements: {
-                                       type: SchemaType.ARRAY,
-                                       items: {
-                                          type: SchemaType.OBJECT,
-                                          properties: {
-                                             statement: { type: SchemaType.STRING },
-                                             score: { type: SchemaType.NUMBER },
-                                             scoreOutOf: { type: SchemaType.NUMBER },
-                                             feedback: { type: SchemaType.STRING },
-                                          },
-                                       },
-                                    },
-                                    keywordsUsed: {
-                                       type: SchemaType.ARRAY,
-                                       items: { type: SchemaType.STRING },
-                                    },
-                                    improvementSuggestions: {
-                                       type: SchemaType.ARRAY,
-                                       items: { type: SchemaType.STRING },
-                                    },
-                                 },
-                              },
-                           },
-                           overallFeedback: { type: SchemaType.STRING },
+                           commentary: { type: SchemaType.STRING },
                         },
                      },
                      skills: {
@@ -183,32 +89,7 @@ const createCompletion = async (req, res) => {
                         properties: {
                            score: { type: SchemaType.NUMBER },
                            scoreOutOf: { type: SchemaType.NUMBER },
-                           technicalSkills: {
-                              type: SchemaType.ARRAY,
-                              items: {
-                                 type: SchemaType.OBJECT,
-                                 properties: {
-                                    skill: { type: SchemaType.STRING },
-                                    relevance: { type: SchemaType.STRING },
-                                    level: { type: SchemaType.STRING },
-                                 },
-                              },
-                           },
-                           softSkills: {
-                              type: SchemaType.ARRAY,
-                              items: {
-                                 type: SchemaType.OBJECT,
-                                 properties: {
-                                    skill: { type: SchemaType.STRING },
-                                    contextProvided: { type: SchemaType.BOOLEAN },
-                                 },
-                              },
-                           },
-                           missingCriticalSkills: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                           skillPresentationSuggestions: { type: SchemaType.STRING },
+                           commentary: { type: SchemaType.STRING },
                         },
                      },
                      education: {
@@ -216,107 +97,7 @@ const createCompletion = async (req, res) => {
                         properties: {
                            score: { type: SchemaType.NUMBER },
                            scoreOutOf: { type: SchemaType.NUMBER },
-                           degrees: {
-                              type: SchemaType.ARRAY,
-                              items: {
-                                 type: SchemaType.OBJECT,
-                                 properties: {
-                                    degree: { type: SchemaType.STRING },
-                                    institution: { type: SchemaType.STRING },
-                                    year: { type: SchemaType.STRING },
-                                    relevance: { type: SchemaType.STRING },
-                                 },
-                              },
-                           },
-                           certifications: {
-                              type: SchemaType.ARRAY,
-                              items: {
-                                 type: SchemaType.OBJECT,
-                                 properties: {
-                                    name: { type: SchemaType.STRING },
-                                    issuer: { type: SchemaType.STRING },
-                                    year: { type: SchemaType.STRING },
-                                    relevance: { type: SchemaType.STRING },
-                                 },
-                              },
-                           },
-                           educationSectionFeedback: { type: SchemaType.STRING },
-                        },
-                     },
-                     projects: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           projectEntries: {
-                              type: SchemaType.ARRAY,
-                              items: {
-                                 type: SchemaType.OBJECT,
-                                 properties: {
-                                    name: { type: SchemaType.STRING },
-                                    description: { type: SchemaType.STRING },
-                                    technologies: {
-                                       type: SchemaType.ARRAY,
-                                       items: { type: SchemaType.STRING },
-                                    },
-                                    impact: { type: SchemaType.STRING },
-                                    relevance: { type: SchemaType.STRING },
-                                 },
-                              },
-                           },
-                           overallProjectsSectionFeedback: { type: SchemaType.STRING },
-                        },
-                     },
-                  },
-               },
-               languageAndTone: {
-                  type: SchemaType.OBJECT,
-                  properties: {
-                     score: { type: SchemaType.NUMBER },
-                     scoreOutOf: { type: SchemaType.NUMBER },
-                     clarity: { type: SchemaType.STRING },
-                     consistency: { type: SchemaType.STRING },
-                     grammar: { type: SchemaType.STRING },
-                     tone: { type: SchemaType.STRING },
-                     actionVerbs: {
-                        type: SchemaType.ARRAY,
-                        items: {
-                           type: SchemaType.OBJECT,
-                           properties: {
-                              verb: { type: SchemaType.STRING },
-                              frequency: { type: SchemaType.NUMBER },
-                              impact: { type: SchemaType.STRING },
-                           },
-                        },
-                     },
-                     improvementSuggestions: {
-                        type: SchemaType.ARRAY,
-                        items: { type: SchemaType.STRING },
-                     },
-                  },
-               },
-               atsCompatibility: {
-                  type: SchemaType.OBJECT,
-                  properties: {
-                     overallScore: { type: SchemaType.NUMBER },
-                     scoreOutOf: { type: SchemaType.NUMBER },
-                     keywordMatching: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           matchedKeywords: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                           missingKeywords: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                           keywordSuggestions: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
+                           commentary: { type: SchemaType.STRING },
                         },
                      },
                      formatting: {
@@ -324,122 +105,29 @@ const createCompletion = async (req, res) => {
                         properties: {
                            score: { type: SchemaType.NUMBER },
                            scoreOutOf: { type: SchemaType.NUMBER },
-                           issues: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
-                           improvements: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                        },
-                     },
-                     fileType: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           detected: { type: SchemaType.STRING },
-                           isRecommended: { type: SchemaType.BOOLEAN },
-                           recommendation: { type: SchemaType.STRING },
+                           commentary: { type: SchemaType.STRING },
                         },
                      },
                   },
                },
-               industrySpecificAnalysis: {
+               summary: {
                   type: SchemaType.OBJECT,
                   properties: {
-                     industryAlignment: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           detectedIndustry: { type: SchemaType.STRING },
-                           alignmentScore: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           keyIndustryTerms: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                           missingIndustryKeywords: {
-                              type: SchemaType.ARRAY,
-                              items: { type: SchemaType.STRING },
-                           },
-                        },
-                     },
-                     domainExpertise: {
-                        type: SchemaType.ARRAY,
-                        items: {
-                           type: SchemaType.OBJECT,
-                           properties: {
-                              domain: { type: SchemaType.STRING },
-                              expertiseLevel: { type: SchemaType.STRING },
-                              evidenceInResume: { type: SchemaType.STRING },
-                           },
-                        },
-                     },
-                     industryTrends: {
-                        type: SchemaType.ARRAY,
-                        items: {
-                           type: SchemaType.OBJECT,
-                           properties: {
-                              trend: { type: SchemaType.STRING },
-                              presenceInResume: { type: SchemaType.STRING },
-                              suggestionToIncorporate: { type: SchemaType.STRING },
-                           },
-                        },
-                     },
-                     overallIndustrySpecificFeedback: { type: SchemaType.STRING },
-                  },
-               },
-               overallAssessment: {
-                  type: SchemaType.OBJECT,
-                  properties: {
-                     score: { type: SchemaType.NUMBER },
-                     scoreOutOf: { type: SchemaType.NUMBER },
-                     interpretation: { type: SchemaType.STRING },
-                     keyStrengths: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
-                     criticalWeaknesses: {
-                        type: SchemaType.ARRAY,
-                        items: { type: SchemaType.STRING },
-                     },
-                     uniqueSellingPoints: {
-                        type: SchemaType.ARRAY,
-                        items: { type: SchemaType.STRING },
-                     },
-                  },
-               },
-               actionableSuggestions: {
-                  type: SchemaType.ARRAY,
-                  items: {
-                     type: SchemaType.OBJECT,
-                     properties: {
-                        category: { type: SchemaType.STRING },
-                        suggestion: { type: SchemaType.STRING },
-                        priority: { type: SchemaType.STRING },
-                        potentialImpact: { type: SchemaType.STRING },
-                     },
-                  },
-               },
-               competitivenessAssessment: {
-                  type: SchemaType.OBJECT,
-                  properties: {
-                     overallCompetitiveness: { type: SchemaType.STRING },
-                     standOutFeatures: {
-                        type: SchemaType.ARRAY,
-                        items: { type: SchemaType.STRING },
-                     },
-                     areasLaggingBehindPeers: {
-                        type: SchemaType.ARRAY,
-                        items: { type: SchemaType.STRING },
-                     },
-                     industryPositioning: { type: SchemaType.STRING },
+                     overallImpression: { type: SchemaType.STRING },
+                     keyTakeaways: { type: SchemaType.STRING }, // Summary of key points
+                     nextSteps: { type: SchemaType.STRING }, // Recommendations for further action
                   },
                },
             },
             required: [
                "personalInfo",
-               "visualAnalysis",
-               "contentAnalysis",
-               "languageAndTone",
-               "atsCompatibility",
-               "industrySpecificAnalysis",
-               "overallAssessment",
-               "actionableSuggestions",
-               "competitivenessAssessment",
+               "isGoodResumeLayout",
+               "strengths",
+               "weaknesses",
+               "suggestions",
+               "overallScore",
+               "sectionScores",
+               "summary",
             ],
          },
       },
@@ -458,19 +146,63 @@ const createCompletion = async (req, res) => {
       return fileToGenerativePart(file.path, file.mimetype);
    });
 
-   const prompt =
-      "Analyze the following resume as an expert in resume analysis. Resume/CV is added as an image. Always response in json.";
-   const result = await model.generateContent([prompt, ...imagesParts]);
-   console.log("------------------SimpleTextFormat----------------------");
-   console.log("");
-   console.log(result.response.text());
+   const prompt = `Analyze the following resume as an expert in resume analysis. Resume/CV is added as an image. Always response in json.
 
-   console.log("-------------------JSONFormat----------------------");
-   console.log("");
-   console.log("");
-   console.log(result.response);
+      Some crucail things to keep in mind.
+      
+      Here are key points an AI should keep in mind when auditing a resume to ensure it aligns with best practices:
+      1. Structure and Formatting
+      Clear Sections: Ensure the resume is divided into recognizable sections (e.g., Contact Info, Summary, Skills, Experience, Education).
+      Consistency: Fonts, text size, and spacing should be uniform throughout the resume.
+      Length: Ideally, a resume should be 1-2 pages long, depending on experience.
+      Use of Bullet Points: Employment and experience details should use bullet points for readability.
+      Alignment: Text alignment should be consistent (e.g., left-aligned headers, indented bullet points).
+      2. Content Quality
+      Relevance: Verify that content focuses on skills and experience relevant to the job the candidate is applying for.
+      Action Words: Check for the use of action verbs (e.g., "managed," "developed," "led") to describe achievements.
+      Quantifiable Results: Ensure that achievements are quantified (e.g., "increased sales by 20%" rather than "improved sales").
+      Conciseness: Content should be concise, with unnecessary or outdated information removed.
+      No Overly Technical Terms: Avoid jargon or overly technical language that could confuse non-expert readers.
+      3. Grammar and Spelling
+      Error-Free: No spelling or grammar mistakes.
+      Professional Language: Ensure language is professional and free from informal terms or slang.
+      4. Customization and Keywords
+      Tailoring for Specific Jobs: The resume should be customized for the job or industry the candidate is targeting.
+      ATS Optimization: Verify if the resume contains relevant keywords that match the job description for Applicant Tracking Systems (ATS) compatibility.
+      Avoidance of Graphics: Ensure minimal use of graphics or images, as these may not be parsed well by ATS.
+      5. Skills and Competencies
+      Core Skills: Ensure the resume highlights the most important and relevant skills (e.g., technical, soft, or domain-specific).
+      Balanced Skillset: Check for a balance between hard skills (e.g., coding, design) and soft skills (e.g., leadership, communication).
+      Updated Skills: Ensure the candidate’s skills reflect current trends and technologies in their field.
+      6. Experience Section
+      Chronological Order: Ensure the experience section lists jobs in reverse chronological order.
+      Job Titles: Ensure job titles are clear and properly reflect the role.
+      Impactful Descriptions: Check whether job descriptions highlight the candidate's impact rather than just duties.
+      7. Education Section
+      Relevant Education: Verify the inclusion of relevant degrees and certifications, especially for roles requiring formal education.
+      Date Consistency: Ensure that dates are listed and consistent.
+      8. Contact Information
+      Updated Information: Ensure the resume includes an updated phone number, email address, and optionally, a LinkedIn profile.
+      No Personal Details: Personal details like marital status, nationality, or gender should generally be omitted, unless required.
+      9. Achievements and Certifications
+      Certifications: Ensure that industry-relevant certifications are included and up-to-date.
+      Achievements: Look for standout achievements that are related to the field.
+      10. Portfolio or Links (If Applicable)
+      Portfolio: For roles requiring visual or technical work, ensure links to an online portfolio or GitHub are included.
+      Clickable Links: Ensure all URLs provided in the resume are clickable and correctly formatted.
+      By applying these points, an AI system can effectively audit a resume to ensure it's optimized for both human and machine review.
+      
+      `;
 
-   return res.status(200).json([files, { res: result.response }]);
+   try {
+      const result = await model.generateContent([prompt, ...imagesParts]);
+
+      console.log(result.response.text());
+
+      return res.status(200).json({ res: JSON.parse(result.response.text()) });
+   } catch (error) {
+      return res.status(400).json({ error: error?.message || error });
+   }
 };
 
 export { createCompletion };
