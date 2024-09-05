@@ -1,6 +1,17 @@
 import mongoose from "mongoose";
 
 const uploadedResumeSchema = new mongoose.Schema({
-   name: String,
-   path: String,
+   files: {
+      type: [
+         {
+            path: { type: String, required: true },
+            mimetype: { type: String, required: true },
+         },
+      ],
+      required: true,
+   },
 });
+
+const UploadedResume = mongoose.model("UploadedResume", uploadedResumeSchema);
+
+export { UploadedResume };

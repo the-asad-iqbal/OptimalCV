@@ -30,28 +30,42 @@ const HeroSection = () => {
          });
 
          const data = await response.json();
-         try {
-            if (response.ok) {
-               setShowLoader(true);
-               setIsUploading(false);
-               const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
-                  method: "POST",
-                  headers: {
-                     "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                     files: data,
-                  }),
-               });
-               const result = await newRes.json();
-               if (newRes.ok) {
-                  setResData(result);
-                  setShowLoader(false);
-               }
-            }
-         } catch (error) {
-            console.log(error);
-         }
+         console.log(data);
+
+         const mustHaveData = await fetch("http://localhost:3000/api/v1/resume/create", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+               files: data,
+            }),
+         });
+         console.log(await mustHaveData.json());
+         
+
+         // try {
+         //    if (response.ok) {
+         //       setShowLoader(true);
+         //       setIsUploading(false);
+         //       const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
+         //          method: "POST",
+         //          headers: {
+         //             "Content-Type": "application/json",
+         //          },
+         //          body: JSON.stringify({
+         //             files: data,
+         //          }),
+         //       });
+         //       const result = await newRes.json();
+         //       if (newRes.ok) {
+         //          setResData(result);
+         //          setShowLoader(false);
+         //       }
+         //    }
+         // } catch (error) {
+         //    console.log(error);
+         // }
       } catch (error) {
          console.error("Error uploading file:", error);
       }
