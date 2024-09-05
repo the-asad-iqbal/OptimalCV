@@ -20,6 +20,7 @@ const HeroSection = () => {
       formData.append("resume", file);
 
       try {
+         setIsUploading(true);
          const response = await fetch("http://localhost:3000/api/v1/upload/file", {
             method: "POST",
             body: formData,
@@ -27,9 +28,6 @@ const HeroSection = () => {
 
          const data = await response.json();
          if (response.ok) {
-            
-            setIsUploading(true);
-
             // const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
             //    method: "POST",
             //    headers: {
@@ -39,9 +37,7 @@ const HeroSection = () => {
             //       files: data,
             //    }),
             // });
-
             // const result = await newRes.json();
-
             // if (newRes.ok) {
             //    setResData(result);
             // }
@@ -77,6 +73,7 @@ const HeroSection = () => {
                   <button
                      className="bg-purple hover:bg-purple/90 text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out flex items-center group"
                      type="submit"
+                     disabled={isUploading || !file}
                   >
                      Upload
                      <CloudUpload className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
