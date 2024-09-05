@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { CloudUpload } from "lucide-react";
-
-import Audit from "./Audit";
-import Skelton from "./Skelton";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
    const [file, setFile] = useState(null);
    const [resData, setResData] = useState({});
    const [isUploading, setIsUploading] = useState(false);
    const [showLoader, setShowLoader] = useState(false);
+
+   const navigate = useNavigate();
 
    const handleFileChange = (e) => {
       setFile(e.target.files[0]);
@@ -41,31 +41,11 @@ const HeroSection = () => {
                files: data,
             }),
          });
-         console.log(await mustHaveData.json());
-         
 
-         // try {
-         //    if (response.ok) {
-         //       setShowLoader(true);
-         //       setIsUploading(false);
-         //       const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
-         //          method: "POST",
-         //          headers: {
-         //             "Content-Type": "application/json",
-         //          },
-         //          body: JSON.stringify({
-         //             files: data,
-         //          }),
-         //       });
-         //       const result = await newRes.json();
-         //       if (newRes.ok) {
-         //          setResData(result);
-         //          setShowLoader(false);
-         //       }
-         //    }
-         // } catch (error) {
-         //    console.log(error);
-         // }
+         const mustHaveDataJson = await mustHaveData.json();
+         console.log(mustHaveDataJson);
+
+         navigate("/resume/" + mustHaveDataJson.id);
       } catch (error) {
          console.error("Error uploading file:", error);
       }
