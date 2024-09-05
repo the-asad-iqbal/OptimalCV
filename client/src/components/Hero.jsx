@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CloudUpload } from "lucide-react";
+
 import Audit from "./Audit";
 
 const HeroSection = () => {
@@ -27,20 +28,25 @@ const HeroSection = () => {
          });
 
          const data = await response.json();
-         if (response.ok) {
-            // const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
-            //    method: "POST",
-            //    headers: {
-            //       "Content-Type": "application/json",
-            //    },
-            //    body: JSON.stringify({
-            //       files: data,
-            //    }),
-            // });
-            // const result = await newRes.json();
-            // if (newRes.ok) {
-            //    setResData(result);
-            // }
+         try {
+            if (response.ok) {
+               const newRes = await fetch("http://localhost:3000/api/v1/completion/create", {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                     files: data,
+                  }),
+               });
+               const result = await newRes.json();
+               if (newRes.ok) {
+                  setResData(result);
+               }
+               setIsUploading(false);
+            }
+         } catch (error) {
+            console.log(error);
          }
       } catch (error) {
          console.error("Error uploading file:", error);
@@ -48,7 +54,7 @@ const HeroSection = () => {
    };
 
    return (
-      <div className="bg-gradient-to-br from-black to-purple/5 h-screen flex items-center justify-center font-poppins text-lightGray w-full relative flex-col">
+      <div className="bg-gradient-to-br from-black to-purple/5 h-screen flex items-center justify-center font-poppins text-lightGray w-full relative flex-col min-h-screen">
          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center bg-[url('./intersect.png')]">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 line-clamp-6">
                Optimize your <span className="text-purple">CV!!</span>
@@ -71,12 +77,16 @@ const HeroSection = () => {
                   />
 
                   <button
-                     className="bg-purple hover:bg-purple/90 text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out flex items-center group"
+                     className="bg-purple hover:bg-purple/90 text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out flex items-center group disabled:hover:cursor-not-allowed"
                      type="submit"
                      disabled={isUploading || !file}
                   >
-                     Upload
-                     <CloudUpload className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
+                     {isUploading ? "Uploading..." : "Upload"}
+                     {!isUploading ? (
+                        <CloudUpload className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
+                     ) : (
+                        <img src="./animatedUpload.gif" className="ml-2 h-6 w-6 -rotate-45  " />
+                     )}
                   </button>
                </form>
             </div>
