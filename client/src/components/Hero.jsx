@@ -43,7 +43,6 @@ const HeroSection = () => {
          });
 
          const mustHaveDataJson = await mustHaveData.json();
-         console.log(mustHaveDataJson);
 
          navigate("/resume/" + mustHaveDataJson.id);
       } catch (error) {
@@ -57,7 +56,7 @@ const HeroSection = () => {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 line-clamp-6">
                Optimize your <span className="text-purple">CV!!</span>
             </h1>
-            <p className="text-xl sm:text-2xl mb-12 max-w-3xl mx-auto text-lightGray opacity-55">
+            <p className="text-xl sm:text-2xl mb-12 max-w-3xl mx-auto text-lightGray opacity-75">
                Craft a professional resume that stands out and lands you your dream job.
             </p>
             <div className="flex flex-col items-center justify-center gap-4">
