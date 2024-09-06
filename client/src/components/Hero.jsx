@@ -110,7 +110,7 @@ const HeroSection = () => {
                </span>{" "}
                and lands you your{" "}
                <span>
-                  <span className="text-[#ff3d3c] font-bold opacity-100">dream job.</span>
+                 dream job.
                </span>
             </p>
             <div className="flex flex-col items-center justify-center gap-4">
