@@ -35,7 +35,7 @@ nav div a {
    width: calc(219% + 1.3px);
    height: 132px;
    transform: rotateY(180deg);
-   animation: wave-animation 20s linear infinite;
+   animation: wave-animation 15s linear infinite;
 }
 
 .custom-shape-divider-bottom-1725623496 .shape-fill {
@@ -48,5 +48,8 @@ nav div a {
    }
    100% {
       transform: translateX(-50%) rotateY(180deg);
+   }
+   0% {
+      transform: translateX(0) rotateY(180deg);
    }
 }
