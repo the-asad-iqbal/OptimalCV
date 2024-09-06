@@ -1,36 +1,46 @@
-import React from 'react';
+import React from "react";
 
-const ScoreCard = ({ score, issues }) => {
-  // Dynamic color based on score
-  const scoreColor = score >= 75 ? 'text-green-500' : score >= 50 ? 'text-yellow-500' : 'text-red-500';
-  const bgColor = score >= 75 ? 'bg-green-200' : score >= 50 ? 'bg-yellow-200' : 'bg-red-200';
+const ScoreGauge = ({ percentage = 56, size = 200, strokeWidth = 20 }) => {
+   const radius = (size - strokeWidth) / 2;
+   const circumference = radius * Math.PI;
+   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
-  return (
-    <div className="flex flex-col items-center p-4 bg-white shadow-md rounded-lg">
-      <div className="relative w-32 h-32 flex justify-center items-center">
-        {/* Circular progress background */}
-        <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gray-200" />
-        
-        {/* Dynamic circular progress */}
-        <div
-          className={`absolute top-0 left-0 w-full h-full rounded-full ${bgColor}`}
-          style={{
-            clipPath: `inset(0% ${100 - score}% 0% 0%)`,
-          }}
-        />
-        
-        {/* Score text */}
-        <div className="z-10 flex flex-col justify-center items-center">
-          <p className={`text-4xl font-bold ${scoreColor}`}>{score}/100</p>
-          <p className="text-gray-500">{issues} Issues</p>
-        </div>
+   const getColor = () => {
+      if (percentage >= 80) {
+         return "green";
+      } else if (percentage >= 50) {
+         return "yellow";
+      } else {
+         return "red";
+      }
+   };
+
+   return (
+      <div className="relative" style={{ width: size, height: size / 2 }}>
+         <svg className="w-full h-full" viewBox={`0 0 ${size} ${size / 2}`}>
+            <circle
+               className={`text-${getColor()}-500`}
+               strokeWidth={strokeWidth}
+               strokeDasharray={circumference}
+               strokeDashoffset={strokeDashoffset}
+               strokeLinecap="round"
+               stroke="currentColor"
+               fill="transparent"
+               r={radius}
+               cx={size / 2}
+               cy={(size / 4) * 3}
+               style={{
+                  transform: "rotate(-180deg)",
+                  transformOrigin: "50% 50%",
+                  transition: "stroke-dashoffset 0.5s ease-in-out",
+               }}
+            />
+         </svg>
+         <div className="absolute inset-x-0 bottom-0 flex items-center justify-center">
+            <span className="text-3xl font-bold">{percentage}%</span>
+         </div>
       </div>
-      <p className="text-lg font-semibold mt-2">Your Score</p>
-
-
-      
-    </div>
-  );
+   );
 };
 
-export default ScoreCard;
+export default ScoreGauge;
