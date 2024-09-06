@@ -13,9 +13,40 @@
 
 body {
    @apply bg-darkCharcoal h-screen w-screen overflow-x-hidden;
-   
 }
 
 nav div a {
    @apply text-white hover:text-purple;
+}
+
+.custom-shape-divider-bottom-1725623496 {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   overflow: hidden;
+   line-height: 0;
+   transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1725623496 svg {
+   position: relative;
+   display: block;
+   width: calc(219% + 1.3px);
+   height: 132px;
+   transform: rotateY(180deg);
+   animation: wave-animation 20s linear infinite;
+}
+
+.custom-shape-divider-bottom-1725623496 .shape-fill {
+   fill: white;
+}
+
+@keyframes wave-animation {
+   0% {
+      transform: translateX(0) rotateY(180deg);
+   }
+   100% {
+      transform: translateX(-50%) rotateY(180deg);
+   }
 }
