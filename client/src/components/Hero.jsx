@@ -104,14 +104,13 @@ const HeroSection = () => {
             </h1>
 
             <p className="text-xl sm:text-2xl mb-12 mx-auto text-lightGray opacity-75 max-w-xl">
-               Craft a professional resume that{" "}
+               Craft a{""}
+               <span className="text-[#ff3d3c] font-bold opacity-100">Resume</span> {""}
+               that{" "}
                <span>
                   <span className="text-[#ff3d3c] font-bold opacity-100">stands out</span>
                </span>{" "}
-               and lands you your{" "}
-               <span>
-                 dream job.
-               </span>
+               and lands you your <span>dream job.</span>
             </p>
             <div className="flex flex-col items-center justify-center gap-4">
                <label htmlFor="fileInput" className="w-full">
