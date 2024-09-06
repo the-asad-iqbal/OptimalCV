@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CloudUpload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Upload } from "lucide-react";
@@ -11,13 +11,14 @@ const HeroSection = () => {
 
    const navigate = useNavigate();
 
-   const handleFileChange = (e) => {
-      setFile(e.target.files[0]);
-   };
-
    const handleUpload = async (e) => {
-      e.preventDefault();
-      if (!file) return;
+      if (e) {
+         e.preventDefault();
+      }
+      if (!file) {
+         console.log("Please select a file");
+         return;
+      }
       console.log(file);
 
       const formData = new FormData();
@@ -52,6 +53,9 @@ const HeroSection = () => {
       }
    };
 
+   useEffect(() => {
+      handleUpload();
+   }, [file]);
    return (
       <div className="flex flex-col items-center justify-center text-lightGray w-full min-h-screen h-full">
          <div
@@ -62,59 +66,46 @@ const HeroSection = () => {
          ></div>
          <div className="max-w-7xl mx-auto text-center p-20 flex flex-col items-center justify-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 line-clamp-6">
-               Optimize your <span className="text-[#ff3d3c]">CV!!</span>
+               Optimize your{" "}
+               <span class="text-transparent bg-clip-text bg-gradient-to-r to-[#ff3d3c] from-[#5c00ef]">
+                  Resume
+               </span>
             </h1>
+
             <p className="text-xl sm:text-2xl mb-12 max-w-3xl mx-auto text-lightGray opacity-75">
                Craft a professional resume that stands out and lands you your dream job.
             </p>
             <div className="flex flex-col items-center justify-center gap-4">
                <form
-                  onSubmit={handleUpload}
                   className="flex flex-col gap-4 items-center justify-center"
+                  onSubmit={handleUpload}
                >
-                  <div class="flex items-center justify-center w-full">
-                     <label
-                        for="dropzone-file"
-                        class="flex flex-col items-center justify-centerh-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer min-w-64 w-full"
+                  <label htmlFor="resume" className="w-full">
+                     <button
+                        className="bg-[#ff3d3c] hover:bg-[#ff3d3c]/90 text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out flex items-center group disabled:hover:cursor-not-allowed"
+                        disabled={isUploading || !file}
                      >
-                        <div className="relative">
-                           <input
-                              type="file"
-                              name="resume"
-                              onChange={handleFileChange}
-                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                              accept="image/svg+xml,image/png,image/jpeg,image/gif"
-                           />
-                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                              <Upload className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" />
-                              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                 <span className="font-semibold">Click to upload</span> or drag and
-                                 drop
-                              </p>
-                              {/* <p className="text-xs text-gray-500 dark:text-gray-400">
-                                 SVG, PNG, JPG or GIF (MAX. 800x400px)
-                              </p> */}
-                           </div>
-                        </div>
-                     </label>
-                  </div>
-
-                  <button
-                     className="bg-[#ff3d3c] hover:bg-[#ff3d3c]/90 text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out flex items-center group disabled:hover:cursor-not-allowed"
-                     type="submit"
-                     disabled={isUploading || !file}
-                  >
-                     {isUploading ? "Uploading..." : "Upload"}
-                     {!isUploading ? (
-                        <CloudUpload className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
-                     ) : (
-                        <img
-                           src="./animatedUpload.gif"
-                           className="ml-2 h-6 w-6 -rotate-45"
-                           alt="Uploading"
+                        <input
+                           type="file"
+                           name="resume"
+                           onChange={(e) => {
+                              setFile(e.target.files[0]);
+                           }}
+                           className="opacity-0 cursor-pointer"
+                           accept="image/png,image/jpeg,application/pdf"
                         />
-                     )}
-                  </button>
+                        {isUploading ? "Uploading..." : "Upload"}
+                        {!isUploading ? (
+                           <CloudUpload className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
+                        ) : (
+                           <img
+                              src="./animatedUpload.gif"
+                              className="ml-2 h-6 w-6 -rotate-45"
+                              alt="Uploading"
+                           />
+                        )}
+                     </button>
+                  </label>
                </form>
             </div>
          </div>
