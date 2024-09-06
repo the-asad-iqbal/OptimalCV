@@ -1,6 +1,6 @@
 import React from "react";
 
-const ScoreGauge = ({ percentage = 56, size = 200, strokeWidth = 20 }) => {
+const ScoreGauge = ({ percentage = 1, size = 200, strokeWidth = 20 }) => {
    const radius = (size - strokeWidth) / 2;
    const circumference = radius * Math.PI;
    const strokeDashoffset = circumference - (percentage / 100) * circumference;
