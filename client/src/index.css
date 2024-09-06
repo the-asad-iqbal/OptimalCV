@@ -13,6 +13,7 @@
 
 body {
    @apply bg-darkCharcoal h-screen w-screen overflow-x-hidden;
+   
 }
 
 nav div a {
