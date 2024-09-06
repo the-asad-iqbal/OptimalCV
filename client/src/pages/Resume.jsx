@@ -22,8 +22,11 @@ const Resume = () => {
       handleGetResume();
    }, []);
    return (
-      <div className="text-white">
-         <h1>{}</h1>
+      <div className="flex justify-between items-start max-w-7xl mx-auto">
+         <div className="max-w-[350px] w-full h-full min-h-screen bg-white">
+            <h1>Resume</h1>
+         </div>
+         <div></div>
       </div>
    );
 };
