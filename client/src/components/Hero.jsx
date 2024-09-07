@@ -105,7 +105,7 @@ const HeroSection = () => {
                         <CloudUpload className="ml-2 h-5 w-5 -rotate-45 group-hover:translate-x-1 transition duration-300 ease-in-out group-hover:rotate-0" />
                      ) : (
                         <img
-                           src="/api/placeholder/24/24"
+                           src="/animatedUpload.gif"
                            className="ml-2 h-6 w-6 -rotate-45"
                            alt="Uploading"
                         />

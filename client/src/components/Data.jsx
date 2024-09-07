@@ -297,7 +297,7 @@ const Data = ({}) => {
    const { res } = data;
 
    return (
-      <div className="max-w-4xl mx-auto p-6 bg-white w-full min-h-screen h-full ">
+      <div className="max-w-4xl mx-auto p-6 bg-gray-100 w-full min-h-screen h-full rounded-3xl shadow-lg ">
          <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-2xl font-semibold mb-4">Personal Information</h2>
             <div className="grid grid-cols-2 gap-4">
