@@ -19,115 +19,326 @@ const createCompletion = async (req, res) => {
                personalInfo: {
                   type: SchemaType.OBJECT,
                   properties: {
-                     name: { type: SchemaType.STRING },
-                     email: { type: SchemaType.STRING },
-                     role: { type: SchemaType.STRING },
+                     name: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
+                     email: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
+                     phone: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
+                     location: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
+                     linkedIn: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
+                     github: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
+                     role: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
+                     experience: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isAvailable: { type: SchemaType.BOOLEAN },
+                           value: { type: SchemaType.STRING },
+                        },
+                     },
                   },
                },
-               isGoodResumeLayout: {
+               content: {
+                  type: SchemaType.OBJECT,
+                  properties: {
+                     atsParseScore: { type: SchemaType.NUMBER },
+                     repeatingWords: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              word: { type: SchemaType.STRING },
+                              count: { type: SchemaType.NUMBER },
+                           },
+                        },
+                     },
+                     spellAndGrammarErrors: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              word: { type: SchemaType.STRING },
+                              suggestion: { type: SchemaType.STRING },
+                              context: { type: SchemaType.STRING },
+                           },
+                        },
+                     },
+                     quantifiableAchievements: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              name: { type: SchemaType.STRING },
+                              summary: { type: SchemaType.STRING },
+                              impact: { type: SchemaType.STRING },
+                           },
+                        },
+                     },
+                     sentenceLength: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           averageLength: { type: SchemaType.NUMBER },
+                           longSentences: { type: SchemaType.NUMBER },
+                           shortSentences: { type: SchemaType.NUMBER },
+                           suggestedImprovements: {
+                              type: SchemaType.ARRAY,
+                              items: { type: SchemaType.STRING },
+                           },
+                        },
+                     },
+                     industryKeywords: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              keyword: { type: SchemaType.STRING },
+                              isPresent: { type: SchemaType.BOOLEAN },
+                              relevanceScore: { type: SchemaType.NUMBER },
+                           },
+                        },
+                     },
+                  },
+               },
+               skills: {
+                  type: SchemaType.OBJECT,
+                  properties: {
+                     hardSkills: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              skill: { type: SchemaType.STRING },
+                              relevanceScore: { type: SchemaType.NUMBER },
+                           },
+                        },
+                     },
+                     softSkills: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              skill: { type: SchemaType.STRING },
+                              relevanceScore: { type: SchemaType.NUMBER },
+                           },
+                        },
+                     },
+                     skillMatchScore: { type: SchemaType.NUMBER },
+                     missingCriticalSkills: {
+                        type: SchemaType.ARRAY,
+                        items: { type: SchemaType.STRING },
+                     },
+                  },
+               },
+               resumeSections: {
+                  type: SchemaType.OBJECT,
+                  properties: {
+                     contactInformation: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isPresent: { type: SchemaType.BOOLEAN },
+                           completeness: { type: SchemaType.NUMBER },
+                        },
+                     },
+                     essentialSections: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              section: { type: SchemaType.STRING },
+                              isPresent: { type: SchemaType.BOOLEAN },
+                              quality: { type: SchemaType.STRING },
+                           },
+                        },
+                     },
+                     sectionLength: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              section: { type: SchemaType.STRING },
+                              wordCount: { type: SchemaType.NUMBER },
+                              isAppropriate: { type: SchemaType.BOOLEAN },
+                           },
+                        },
+                     },
+                     sectionOrder: {
+                        type: SchemaType.ARRAY,
+                        items: {
+                           type: SchemaType.OBJECT,
+                           properties: {
+                              section: { type: SchemaType.STRING },
+                              isCorrectOrder: { type: SchemaType.BOOLEAN },
+                              suggestedPosition: { type: SchemaType.NUMBER },
+                           },
+                        },
+                     },
+                     missingImportantSections: {
+                        type: SchemaType.ARRAY,
+                        items: { type: SchemaType.STRING },
+                     },
+                  },
+               },
+               style: {
+                  type: SchemaType.OBJECT,
+                  properties: {
+                     resumeDesign: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isGoodDesign: { type: SchemaType.BOOLEAN },
+                           reason: { type: SchemaType.STRING },
+                           suggestedImprovements: {
+                              type: SchemaType.ARRAY,
+                              items: { type: SchemaType.STRING },
+                           },
+                        },
+                     },
+                     emailAddress: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isGoodEmailDesign: { type: SchemaType.BOOLEAN },
+                           suggestion: { type: SchemaType.STRING },
+                        },
+                     },
+                     activeVoiceUsage: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isActiveVoice: { type: SchemaType.BOOLEAN },
+                           percentageActive: { type: SchemaType.NUMBER },
+                        },
+                     },
+                     buzzwordsAndCliches: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           hasBuzzword: { type: SchemaType.BOOLEAN },
+                           buzzwords: {
+                              type: SchemaType.ARRAY,
+                              items: { type: SchemaType.STRING },
+                           },
+                           suggestions: {
+                              type: SchemaType.ARRAY,
+                              items: { type: SchemaType.STRING },
+                           },
+                        },
+                     },
+                     fontAndFormatting: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isConsistentFormatting: { type: SchemaType.BOOLEAN },
+                           readabilityScore: { type: SchemaType.NUMBER },
+                        },
+                     },
+                     resumeLength: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           pages: { type: SchemaType.NUMBER },
+                           isTooLong: { type: SchemaType.BOOLEAN },
+                           suggestedLength: { type: SchemaType.STRING },
+                        },
+                     },
+                     actionVerbAnalysis: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           hasActionVerbs: { type: SchemaType.BOOLEAN },
+                           verbFrequency: { type: SchemaType.NUMBER },
+                           uniqueActionVerbs: {
+                              type: SchemaType.ARRAY,
+                              items: { type: SchemaType.STRING },
+                           },
+                        },
+                     },
+                     bulletPointUsage: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           hasBulletPoints: { type: SchemaType.BOOLEAN },
+                           count: { type: SchemaType.NUMBER },
+                           averageLength: { type: SchemaType.NUMBER },
+                           suggestedImprovements: { type: SchemaType.STRING },
+                        },
+                     },
+                     whitespaceBalance: {
+                        type: SchemaType.OBJECT,
+                        properties: {
+                           isWellBalanced: { type: SchemaType.BOOLEAN },
+                           suggestion: { type: SchemaType.STRING },
+                        },
+                     },
+                  },
+               },
+               atsCompliance: {
+                  type: SchemaType.OBJECT,
+                  properties: {
+                     isATSCompliant: { type: SchemaType.BOOLEAN },
+                     reason: { type: SchemaType.STRING },
+                     complianceScore: { type: SchemaType.NUMBER },
+                     suggestedImprovements: {
+                        type: SchemaType.ARRAY,
+                        items: { type: SchemaType.STRING },
+                     },
+                  },
+               },
+               readabilityScore: {
                   type: SchemaType.OBJECT,
                   properties: {
                      score: { type: SchemaType.NUMBER },
-                     scoreOutOf: { type: SchemaType.NUMBER },
-                     reason: { type: SchemaType.STRING },
-                     isGoodLayout: { type: SchemaType.BOOLEAN },
-                  },
-               },
-               strengths: {
-                  type: SchemaType.ARRAY,
-                  items: {
-                     type: SchemaType.OBJECT,
-                     properties: {
-                        section: { type: SchemaType.STRING }, // e.g., "Experience", "Skills"
-                        details: { type: SchemaType.STRING }, // Detailed explanation
-                     },
-                  },
-               },
-               weaknesses: {
-                  type: SchemaType.ARRAY,
-                  items: {
-                     type: SchemaType.OBJECT,
-                     properties: {
-                        section: { type: SchemaType.STRING },
-                        details: { type: SchemaType.STRING },
-                        impact: { type: SchemaType.STRING }, // How this affects the overall impression
-                     },
-                  },
-               },
-               suggestions: {
-                  type: SchemaType.ARRAY,
-                  items: {
-                     type: SchemaType.OBJECT,
-                     properties: {
-                        suggestedPartName: { type: SchemaType.STRING },
-                        action: { type: SchemaType.STRING }, // Suggested action or improvement
-                        benefit: { type: SchemaType.STRING }, // How this will improve the resume
-                     },
+                     interpretation: { type: SchemaType.STRING },
                   },
                },
                overallScore: {
                   type: SchemaType.OBJECT,
                   properties: {
                      score: { type: SchemaType.NUMBER },
-                     scoreOutOf: { type: SchemaType.NUMBER },
-                     interpretation: { type: SchemaType.STRING }, // e.g., "Excellent", "Needs Improvement"
-                  },
-               },
-               sectionScores: {
-                  type: SchemaType.OBJECT,
-                  properties: {
-                     experience: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           commentary: { type: SchemaType.STRING },
-                        },
-                     },
-                     skills: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           commentary: { type: SchemaType.STRING },
-                        },
-                     },
-                     education: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           commentary: { type: SchemaType.STRING },
-                        },
-                     },
-                     formatting: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                           score: { type: SchemaType.NUMBER },
-                           scoreOutOf: { type: SchemaType.NUMBER },
-                           commentary: { type: SchemaType.STRING },
-                        },
-                     },
-                  },
-               },
-               summary: {
-                  type: SchemaType.OBJECT,
-                  properties: {
-                     overallImpression: { type: SchemaType.STRING },
-                     keyTakeaways: { type: SchemaType.STRING }, // Summary of key points
-                     nextSteps: { type: SchemaType.STRING }, // Recommendations for further action
+                     interpretation: { type: SchemaType.STRING },
                   },
                },
             },
             required: [
                "personalInfo",
-               "isGoodResumeLayout",
-               "strengths",
-               "weaknesses",
-               "suggestions",
+               "content",
+               "skills",
+               "resumeSections",
+               "style",
+               "atsCompliance",
+               "readabilityScore",
                "overallScore",
-               "sectionScores",
-               "summary",
             ],
          },
       },
