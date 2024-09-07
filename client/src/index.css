@@ -23,6 +23,7 @@ nav div a {
    position: absolute;
    bottom: 0;
    left: 0;
+   top: 0;
    width: 100%;
    overflow: hidden;
    line-height: 0;
@@ -36,6 +37,7 @@ nav div a {
    height: 132px;
    transform: rotateY(180deg);
    animation: wave-animation 15s linear infinite;
+   @apply top-0 left-0 right-0;
 }
 
 .custom-shape-divider-bottom-1725623496 .shape-fill {
