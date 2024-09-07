@@ -314,7 +314,7 @@ const Data = ({}) => {
                </div>
                <div>
                   <p>
-                     <strong>Email:</strong> {res.personalInfo.email.value}
+                     <strong className="text-red-600">Email:</strong> {res.personalInfo.email.value}
                   </p>
                   <p>
                      <strong>Phone:</strong> {res.personalInfo.phone.value}
