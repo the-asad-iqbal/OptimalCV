@@ -6,6 +6,7 @@ const uploadedResumeSchema = new mongoose.Schema({
          {
             path: { type: String, required: true },
             mimetype: { type: String, required: true },
+            pdfPath: { type: String },
          },
       ],
       required: true,

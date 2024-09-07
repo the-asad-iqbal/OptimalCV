@@ -23,6 +23,7 @@ const uploadController = async (req, res) => {
             encoding: "base64",
             path: outputPath,
             name: `page${counter}-${req.file.originalname}.png`,
+            pdfPath: req.file.path,
          });
          counter++;
       }

@@ -3,6 +3,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { SchemaType } from "@google/generative-ai";
 import { response } from "express";
 
+import { pdfToLink } from "../utils/pdfToLink";
+
 const createCompletion = async (req, res) => {
    const { files } = req.body;
    if (!files) return res.status(400).json({ error: "No files provided" });
@@ -372,6 +374,7 @@ const createCompletion = async (req, res) => {
       return fileToGenerativePart(file.path, file.mimetype);
    });
 
+
    const prompt = `Analyze the following resume as an expert in resume analysis. Resume/CV is added as an image. Always response in json.
 
       Some crucail things to keep in mind.
@@ -427,7 +430,7 @@ const createCompletion = async (req, res) => {
       if (firstPart.isResume === false) {
          return res.status(400).json({ error: "Are you crazy? Upload a resume!" });
       }
-      
+
       const result2 = await model2.generateContent([prompt, ...imagesParts]);
 
       const secondPart = JSON.parse(result2.response.text());
