@@ -297,13 +297,13 @@ const Data = ({}) => {
    const { res } = data;
 
    return (
-      <div className="max-w-4xl mx-auto p-6 bg-gray-100 w-full min-h-screen h-full rounded-3xl shadow-lg ">
+      <div className="max-w-4xl mx-auto p-6 bg-gray-200 w-full min-h-screen h-full rounded-3xl shadow-lg ">
          <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-2xl font-semibold mb-4">Personal Information</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-red-600">Personal Information</h2>
             <div className="grid grid-cols-2 gap-4">
                <div>
                   <p>
-                     <strong>Name:</strong> {res.personalInfo.name.value}
+                     <strong className="text-red-600">Name:</strong> {res.personalInfo.name.value}
                   </p>
                   <p>
                      <strong>Role:</strong> {res.personalInfo.role.value}
@@ -326,7 +326,7 @@ const Data = ({}) => {
             </div>
          </div>
 
-         <div className="bg-gray-100/50 rounded-lg shadow-md p-6 mb-6 ">
+         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 ">
             <h2 className="text-2xl font-semibold mb-4">Overall Score</h2>
             <div className="flex items-center">
                <div className="w-24 h-24 rounded-full border-8 border-blue-500 flex items-center justify-center text-3xl font-bold">
