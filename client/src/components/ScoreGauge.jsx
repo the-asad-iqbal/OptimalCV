@@ -26,8 +26,8 @@ const ScoreGauge = ({ score = 0, min = 0, max = 100 }) => {
                stroke={color}
                strokeWidth="6"
                strokeLinecap="square"
-               strokeDasharray="125.6"
-               strokeDashoffset="125.6"
+               strokeDasharray="125"
+               strokeDashoffset="125"
                className="transition-all duration-500 ease-out"
                style={{
                   strokeDashoffset: `${125.6 - (fillPercentage * 125.6) / 100}`,
@@ -35,12 +35,14 @@ const ScoreGauge = ({ score = 0, min = 0, max = 100 }) => {
             />
          </svg>
 
-         {/* Score display */}
          <div
             className="absolute inset-0 flex items-center justify-center"
-            style={{ marginTop: "15px" }}
+            style={{ marginTop: "85px", color: color }}
          >
-            <span className="text-4xl font-bold text-gray-800">{score}</span>
+            <p className="text-xl font-bold ">
+               {score}
+               <span>/Score</span>
+            </p>
          </div>
 
          {/* Min and Max labels */}
