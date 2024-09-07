@@ -306,7 +306,7 @@ const Data = ({}) => {
                      <strong className="text-red-600">Name:</strong> {res.personalInfo.name.value}
                   </p>
                   <p>
-                     <strong>Role:</strong> {res.personalInfo.role.value}
+                     <strong className="text-red-600">Role:</strong> {res.personalInfo.role.value}
                   </p>
                   <p>
                      <strong>Experience:</strong> {res.personalInfo.experience.value}
