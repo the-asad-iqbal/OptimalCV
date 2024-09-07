@@ -72,7 +72,6 @@ const HeroSection = () => {
 
    return (
       <div className="flex flex-col items-center justify-center text-lightGray w-full min-h-screen h-full bg-[#0f1a34] bg-cover over">
-
          <div className="relative z-10 max-w-7xl text-center flex flex-col items-center justify-center w-full p-3">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 line-clamp-6">
                Optimize

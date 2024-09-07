@@ -5,8 +5,11 @@ import { response } from "express";
 
 const createCompletion = async (req, res) => {
    const { files } = req.body;
+   if (!files) return res.status(400).json({ error: "No files provided" });
 
    const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+
+   const mainResponse = {};
 
    const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
@@ -16,6 +19,7 @@ const createCompletion = async (req, res) => {
          responseSchema: {
             type: SchemaType.OBJECT,
             properties: {
+               isResume: { type: SchemaType.BOOLEAN },
                personalInfo: {
                   type: SchemaType.OBJECT,
                   properties: {
@@ -168,6 +172,20 @@ const createCompletion = async (req, res) => {
                      },
                   },
                },
+            },
+            required: ["personalInfo", "content", "skills"],
+         },
+      },
+   });
+
+   const model2 = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      systemInstruction: `You are an expert in resume analysis. You will receive a resume and respond with a detailed audit, including deep-dive analysis into each section of the resume, such as strengths, weaknesses, suggestions for improvement, and a score.`,
+      generationConfig: {
+         responseMimeType: "application/json",
+         responseSchema: {
+            type: SchemaType.OBJECT,
+            properties: {
                resumeSections: {
                   type: SchemaType.OBJECT,
                   properties: {
@@ -331,9 +349,6 @@ const createCompletion = async (req, res) => {
                },
             },
             required: [
-               "personalInfo",
-               "content",
-               "skills",
                "resumeSections",
                "style",
                "atsCompliance",
@@ -407,10 +422,19 @@ const createCompletion = async (req, res) => {
 
    try {
       const result = await model.generateContent([prompt, ...imagesParts]);
+      const firstPart = JSON.parse(result.response.text());
 
-      console.log(result.response.text());
+      if (firstPart.isResume === false) {
+         return res.status(400).json({ error: "Are you crazy? Upload a resume!" });
+      }
+      
+      const result2 = await model2.generateContent([prompt, ...imagesParts]);
 
-      return res.status(200).json({ res: JSON.parse(result.response.text()) });
+      const secondPart = JSON.parse(result2.response.text());
+
+      return res.status(200).json({
+         res: { ...firstPart, ...secondPart },
+      });
    } catch (error) {
       return res.status(400).json({ error: error?.message || error });
    }

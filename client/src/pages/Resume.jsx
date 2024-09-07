@@ -4,15 +4,29 @@ import ScoreGauge from "../components/ScoreGauge";
 
 const Resume = () => {
    const { id } = useParams();
-   const [resume, setResume] = useState({});
+   const [resume, setResume] = useState([]);
+   const [filesData, setFilesData] = useState([]);
+   const [audit, setAudit] = useState({});
 
    const handleGetResume = async () => {
       try {
          const response = await fetch(`http://localhost:3000/api/v1/resume/get/${id}`);
          if (response.ok) {
             const data = await response.json();
-            setResume(data);
-            console.log(data);
+            const { files } = data;
+
+            const res = await fetch(`http://localhost:3000/api/v1/completion/create`, {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ files }),
+            });
+
+            if (res.ok) {
+               const data = await res.json();
+               setAudit(data);
+            }
          }
       } catch (error) {
          console.log(error);
