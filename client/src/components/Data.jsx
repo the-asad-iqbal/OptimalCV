@@ -297,10 +297,8 @@ const Data = ({}) => {
    const { res } = data;
 
    return (
-      <div className="max-w-4xl mx-auto p-6 bg-[#202125] w-full min-h-screen h-full">
-         <h1 className="text-3xl font-bold mb-6">Resume Analysis Dashboard</h1>
-
-         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div className="max-w-4xl mx-auto p-6 bg-white w-full min-h-screen h-full ">
+         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-2xl font-semibold mb-4">Personal Information</h2>
             <div className="grid grid-cols-2 gap-4">
                <div>
@@ -328,8 +326,7 @@ const Data = ({}) => {
             </div>
          </div>
 
-         {/* Overall Score */}
-         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+         <div className="bg-gray-100/50 rounded-lg shadow-md p-6 mb-6 ">
             <h2 className="text-2xl font-semibold mb-4">Overall Score</h2>
             <div className="flex items-center">
                <div className="w-24 h-24 rounded-full border-8 border-blue-500 flex items-center justify-center text-3xl font-bold">
@@ -340,7 +337,7 @@ const Data = ({}) => {
          </div>
 
          {/* ATS Compliance */}
-         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 ">
             <h2 className="text-2xl font-semibold mb-4">ATS Compliance</h2>
             <div className="flex items-center mb-4">
                {res.atsCompliance.isATSCompliant ? (
@@ -367,7 +364,7 @@ const Data = ({}) => {
          </div>
 
          {/* Skills */}
-         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 ">
             <h2 className="text-2xl font-semibold mb-4">Skills</h2>
             <div className="grid grid-cols-2 gap-4">
                <div>
@@ -389,7 +386,7 @@ const Data = ({}) => {
          </div>
 
          {/* Links */}
-         <div className="bg-white rounded-lg shadow-md p-6">
+         <div className="bg-gray-100 rounded-lg shadow-md p-6 ">
             <h2 className="text-2xl font-semibold mb-4">Social Links</h2>
             <div className="flex space-x-4">
                {res.Links.github.isAvailable && (
