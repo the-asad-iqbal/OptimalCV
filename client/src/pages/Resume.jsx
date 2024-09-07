@@ -26,10 +26,10 @@ const Resume = () => {
       <div className="h-screen w-screen ">
          <div className="flex justify-between items-start max-w-7xl mx-auto">
             <div className="max-w-[350px] w-full h-full min-h-screen flex flex-col items-center justify-center">
-               <div className="w-full h-[calc(100vh-80px)] bg-[#fff] rounded-md max-w-[350px] p-10 shadow-lg">
+               <div className="w-full h-[calc(100vh-80px)] bg-[#fff] rounded-md max-w-[350px] p-10 shadow-lg mx-auto flex items-start justify-center">
                   <div>
                      <div></div>
-                     <ScoreGauge score={50} issues={12} />
+                     <ScoreGauge score={20} />
                   </div>
                </div>
             </div>
