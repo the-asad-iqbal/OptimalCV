@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ScoreGauge from "../components/ScoreGauge";
+import Data from "../components/Data";
 
 const Resume = () => {
    const { id } = useParams();
@@ -15,18 +16,18 @@ const Resume = () => {
             const data = await response.json();
             const { files } = data;
 
-            const res = await fetch(`http://localhost:3000/api/v1/completion/create`, {
-               method: "POST",
-               headers: {
-                  "Content-Type": "application/json",
-               },
-               body: JSON.stringify({ files }),
-            });
+            // const res = await fetch(`http://localhost:3000/api/v1/completion/create`, {
+            //    method: "POST",
+            //    headers: {
+            //       "Content-Type": "application/json",
+            //    },
+            //    body: JSON.stringify({ files }),
+            // });
 
-            if (res.ok) {
-               const data = await res.json();
-               setAudit(data);
-            }
+            // if (res.ok) {
+            //    const data = await res.json();
+            //    setAudit(data);
+            // }
          }
       } catch (error) {
          console.log(error);
@@ -47,7 +48,7 @@ const Resume = () => {
                   </div>
                </div>
             </div>
-            <div></div>
+            <div className="w-full h-full p-10">{audit && <Data data={audit} />}</div>
          </div>
       </div>
    );
