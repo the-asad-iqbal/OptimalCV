@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AlertCircle, CheckCircle, Github, Linkedin, Globe } from "lucide-react";
+import { ChevronDown, Check, Minus } from "lucide-react";
 
 const Data = ({}) => {
    const data = {
@@ -296,141 +296,52 @@ const Data = ({}) => {
    };
    const { res } = data;
 
-   const [open, setOpen] = useState({
-      
-   });
+   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(true);
 
    return (
-      <div className="max-w-4xl mx-auto p-6 bg-gray-200 w-full min-h-screen h-full rounded-3xl shadow-lg ">
-         <button onClick={""}>Open</button>
-         {"" && (
-            <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6">
-               <h2 className="text-2xl font-semibold mb-4 text-red-600">Personal Information</h2>
-               <div className="grid grid-cols-2 gap-4">
+      <div className="max-w-4xl mx-auto p-6 bg-[#E3E9F5] w-full min-h-screen h-full rounded-3xl shadow-lg">
+         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 transition-all duration-300">
+            <div className="flex items-center justify-between content-center w-full">
+               <h2 className="text-2xl font-semibold mb-4 text-blue-600 w-full">
+                  Personal Information
+               </h2>
+               <button
+                  onClick={() => setIsPersonalInfoOpen(!isPersonalInfoOpen)}
+                  className="focus:outline-none transition-transform duration-300 ease-in-out"
+                  style={{
+                     transform: isPersonalInfoOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  }}
+               >
+                  <ChevronDown />
+               </button>
+            </div>
+            <div
+               className="flex overflow-hidden transition-all duration-300 ease-in-out"
+               style={{
+                  maxHeight: isPersonalInfoOpen ? "1000px" : "0",
+                  opacity: isPersonalInfoOpen ? 1 : 0,
+               }}
+            >
+               <div className="flex flex-col gap-20 w-full bg-[#E3E9F5] p-10 rounded-lg shadow-xl ">
+                  <div className="text-center">
+                     <img src="" />
+
+                     <h3 className="text-2xl font-semibold">Good job!</h3>
+                     <h3 className="text-lg font-normal">
+                        We found the following personal information in your resume.
+                     </h3>
+                  </div>
+                  
                   <div>
-                     <p>
-                        <strong className="text-red-600">Name:</strong>{" "}
-                        {res.personalInfo.name.value}
-                     </p>
-                     <p>
-                        <strong className="text-red-600">Role:</strong>{" "}
-                        {res.personalInfo.role.value}
-                     </p>
-                     <p>
-                        <strong>Experience:</strong> {res.personalInfo.experience.value}
-                     </p>
-                  </div>
-                  <div>
-                     <p>
-                        <strong>Email:</strong> {res.personalInfo.email.value}
-                     </p>
-                     <p>
-                        <strong>Phone:</strong> {res.personalInfo.phone.value}
-                     </p>
-                     <p>
-                        <strong>Location:</strong> {res.personalInfo.location.value}
-                     </p>
+                     {/* <div className="bg-green-400/10 flex items-center px-2 py-1 border border-gray-300 max-w-64">
+                        <Check className="w-5 h-5 mr-2 text-green-600" />
+                        <p className="flex items-center gap-2 font-normal">
+                           <span className="">Name </span>
+                           {res.personalInfo.name.value || "N/A"}
+                        </p>
+                     </div> */}
                   </div>
                </div>
-            </div>
-         )}
-
-         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 ">
-            <h2 className="text-2xl font-semibold mb-4">Overall Score</h2>
-            <div className="flex items-center">
-               <div className="w-24 h-24 rounded-full border-8 border-blue-500 flex items-center justify-center text-3xl font-bold">
-                  {res.overallScore.score.toFixed(1)}
-               </div>
-               <p className="ml-6 text-lg">{res.overallScore.interpretation}</p>
-            </div>
-         </div>
-
-         {/* ATS Compliance */}
-         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 ">
-            <h2 className="text-2xl font-semibold mb-4">ATS Compliance</h2>
-            <div className="flex items-center mb-4">
-               {res.atsCompliance.isATSCompliant ? (
-                  <CheckCircle className="text-green-500 mr-2" />
-               ) : (
-                  <AlertCircle className="text-red-500 mr-2" />
-               )}
-               <span className="text-lg">
-                  {res.atsCompliance.isATSCompliant ? "ATS Compliant" : "Not ATS Compliant"}
-               </span>
-            </div>
-            <p>
-               <strong>Compliance Score:</strong> {res.atsCompliance.complianceScore.toFixed(2)}
-            </p>
-            <p>
-               <strong>Reason:</strong> {res.atsCompliance.reason}
-            </p>
-            <h3 className="font-semibold mt-4">Suggested Improvements:</h3>
-            <ul className="list-disc pl-6">
-               {res.atsCompliance.suggestedImprovements.map((improvement, index) => (
-                  <li key={index}>{improvement}</li>
-               ))}
-            </ul>
-         </div>
-
-         {/* Skills */}
-         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 ">
-            <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-            <div className="grid grid-cols-2 gap-4">
-               <div>
-                  <h3 className="font-semibold mb-2">Hard Skills</h3>
-                  {res.skills.hardSkills.map((skill, index) => (
-                     <div key={index} className="flex justify-between mb-2">
-                        <span>{skill.skill}</span>
-                        <span className="text-blue-500">{skill.relevanceScore.toFixed(2)}</span>
-                     </div>
-                  ))}
-               </div>
-               <div>
-                  <h3 className="font-semibold mb-2">Skill Match Score</h3>
-                  <div className="text-3xl font-bold text-blue-500">
-                     {res.skills.skillMatchScore.toFixed(2)}
-                  </div>
-               </div>
-            </div>
-         </div>
-
-         {/* Links */}
-         <div className="bg-gray-100 rounded-lg shadow-md p-6 ">
-            <h2 className="text-2xl font-semibold mb-4">Social Links</h2>
-            <div className="flex space-x-4">
-               {res.Links.github.isAvailable && (
-                  <a
-                     href={res.Links.github.link}
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className="flex items-center text-gray-700 hover:text-blue-500"
-                  >
-                     <Github className="mr-2" />
-                     GitHub
-                  </a>
-               )}
-               {res.Links.linkedIn.isAvailable && (
-                  <a
-                     href={res.Links.linkedIn.link}
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className="flex items-center text-gray-700 hover:text-blue-500"
-                  >
-                     <Linkedin className="mr-2" />
-                     LinkedIn
-                  </a>
-               )}
-               {res.Links.portofolio.isAvailable && (
-                  <a
-                     href={res.Links.portofolio.link}
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className="flex items-center text-gray-700 hover:text-blue-500"
-                  >
-                     <Globe className="mr-2" />
-                     Portfolio
-                  </a>
-               )}
             </div>
          </div>
       </div>
