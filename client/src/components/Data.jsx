@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { ChevronDown, Check, Minus, User, Mail, BriefcaseBusiness } from "lucide-react";
+import {
+   ChevronDown,
+   Check,
+   Minus,
+   User,
+   Mail,
+   BriefcaseBusiness,
+   MapPin,
+   Smartphone,
+   UserCog,
+} from "lucide-react";
 
 const Data = ({}) => {
    const data = {
@@ -361,8 +371,24 @@ const Data = ({}) => {
                         <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
                            <div className="w-full flex justify-center p-1">
                               <p className="w-full flex items-center">
-                                 <BriefcaseBusiness className="w-4 h-4 mr-2 text-green-600" />
-                                 {res.personalInfo.experience.value}
+                                 <MapPin className="w-4 h-4 mr-2 text-green-600" />
+                                 {res.personalInfo.location?.value || "N/A"}
+                              </p>
+                           </div>
+                        </div>
+                        <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
+                           <div className="w-full flex justify-center p-1">
+                              <p className="w-full flex items-center">
+                                 <Smartphone className="w-4 h-4 mr-2 text-green-600" />
+                                 {res.personalInfo.phone?.value || "N/A"}
+                              </p>
+                           </div>
+                        </div>
+                        <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md  w-full">
+                           <div className="w-full flex justify-center p-1">
+                              <p className="w-full flex items-center">
+                                 <UserCog className="w-4 h-4 mr-2 text-green-600" />
+                                 {res.personalInfo.phone?.value || "N/A"}
                               </p>
                            </div>
                         </div>
