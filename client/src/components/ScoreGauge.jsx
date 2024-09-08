@@ -11,7 +11,7 @@ const ScoreGauge = ({ score = 0, min = 0, max = 100 }) => {
    }, [percentage]);
 
    return (
-      <div className="w-80 h-48 rounded-lg shadow-lg p-4 relative inset-x-0">
+      <div className="w-80 h-48 p-4 relative inset-x-0">
          <svg className="w-full h-full" viewBox="0 0 100 60">
             <path
                d="M10 50 A40 40 0 1 1 90 50 L90 55 Q50 60 10 55 Z"

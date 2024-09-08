@@ -164,6 +164,7 @@ const createCompletion = async (req, res) => {
                            properties: {
                               skill: { type: SchemaType.STRING },
                               relevanceScore: { type: SchemaType.NUMBER },
+                              scoreOutOf: 1,
                            },
                         },
                      },
@@ -174,10 +175,12 @@ const createCompletion = async (req, res) => {
                            properties: {
                               skill: { type: SchemaType.STRING },
                               relevanceScore: { type: SchemaType.NUMBER },
+                              scoreOutOf: 1,
                            },
                         },
                      },
                      skillMatchScore: { type: SchemaType.NUMBER },
+                     scoreOutOf: 1,
                      missingCriticalSkills: {
                         type: SchemaType.ARRAY,
                         items: { type: SchemaType.STRING },
@@ -349,6 +352,7 @@ const createCompletion = async (req, res) => {
                   type: SchemaType.OBJECT,
                   properties: {
                      score: { type: SchemaType.NUMBER },
+                     scoreOutOf: 100,
                      interpretation: { type: SchemaType.STRING },
                   },
                },
@@ -356,6 +360,7 @@ const createCompletion = async (req, res) => {
                   type: SchemaType.OBJECT,
                   properties: {
                      score: { type: SchemaType.NUMBER },
+                     scoreOutOf: 100,
                      interpretation: { type: SchemaType.STRING },
                   },
                },
