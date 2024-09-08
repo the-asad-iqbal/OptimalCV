@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronDown, Check, Minus } from "lucide-react";
+import { ChevronDown, Check, Minus, User, Mail, BriefcaseBusiness } from "lucide-react";
 
 const Data = ({}) => {
    const data = {
@@ -301,45 +301,72 @@ const Data = ({}) => {
    return (
       <div className="max-w-4xl mx-auto p-6 bg-[#E3E9F5] w-full min-h-screen h-full rounded-3xl shadow-lg">
          <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 transition-all duration-300">
-            <div className="flex items-center justify-between content-center w-full">
-               <h2 className="text-2xl font-semibold mb-4 text-blue-600 w-full">
-                  Personal Information
-               </h2>
-               <button
-                  onClick={() => setIsPersonalInfoOpen(!isPersonalInfoOpen)}
-                  className="focus:outline-none transition-transform duration-300 ease-in-out"
+            <div className="flex flex-col">
+               <div className="flex items-center justify-between content-center w-full">
+                  <h2 className="text-2xl font-semibold text-blue-600 w-full flex items-center gap-2">
+                     <User /> Personal Information
+                  </h2>
+                  <button
+                     onClick={() => setIsPersonalInfoOpen(!isPersonalInfoOpen)}
+                     className="focus:outline-none transition-transform duration-300 ease-in-out"
+                     style={{
+                        transform: isPersonalInfoOpen ? "rotate(180deg)" : "rotate(0deg)",
+                     }}
+                  >
+                     <ChevronDown />
+                  </button>
+               </div>
+               <div
+                  className="flex overflow-hidden transition-all duration-300 ease-in-out mt-3"
                   style={{
-                     transform: isPersonalInfoOpen ? "rotate(180deg)" : "rotate(0deg)",
+                     maxHeight: isPersonalInfoOpen ? "1000px" : "0",
+                     opacity: isPersonalInfoOpen ? 1 : 0,
                   }}
                >
-                  <ChevronDown />
-               </button>
-            </div>
-            <div
-               className="flex overflow-hidden transition-all duration-300 ease-in-out"
-               style={{
-                  maxHeight: isPersonalInfoOpen ? "1000px" : "0",
-                  opacity: isPersonalInfoOpen ? 1 : 0,
-               }}
-            >
-               <div className="flex flex-col gap-20 w-full bg-[#E3E9F5] p-10 rounded-lg shadow-xl ">
-                  <div className="text-center">
-                     <img src="" />
+                  <div className="flex flex-col gap-20 w-full bg-[#E3E9F5] p-10 rounded-lg shadow-2xl shadow-gray-400 ">
+                     <div className="flex flex-col items-center justify-center gap-2">
+                        <img src="/test_user.png" className="w-16 h-16" />
 
-                     <h3 className="text-2xl font-semibold">Good job!</h3>
-                     <h3 className="text-lg font-normal">
-                        We found the following personal information in your resume.
-                     </h3>
-                  </div>
-                  
-                  <div>
-                     {/* <div className="bg-green-400/10 flex items-center px-2 py-1 border border-gray-300 max-w-64">
-                        <Check className="w-5 h-5 mr-2 text-green-600" />
-                        <p className="flex items-center gap-2 font-normal">
-                           <span className="">Name </span>
-                           {res.personalInfo.name.value || "N/A"}
-                        </p>
-                     </div> */}
+                        <h3 className="text-2xl font-semibold">Good job!</h3>
+                        <h3 className="text-lg font-normal">
+                           We found the following personal information in your resume.
+                        </h3>
+                     </div>
+
+                     <div className="flex items-start w-full gap-4 flex-wrap justify-between">
+                        <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
+                           <div className="w-full flex justify-center p-1">
+                              <p className="w-full flex items-center">
+                                 <User className="w-4 h-4 mr-2 text-green-600" />
+                                 {res.personalInfo.name.value}
+                              </p>
+                           </div>
+                        </div>
+                        <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
+                           <div className="w-full flex justify-center p-1">
+                              <p className="w-full flex items-center">
+                                 <Mail className="w-4 h-4 mr-2 text-green-600" />
+                                 {res.personalInfo.email.value}
+                              </p>
+                           </div>
+                        </div>
+                        <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
+                           <div className="w-full flex justify-center p-1">
+                              <p className="w-full flex items-center">
+                                 <BriefcaseBusiness className="w-4 h-4 mr-2 text-green-600" />
+                                 {res.personalInfo.experience.value}
+                              </p>
+                           </div>
+                        </div>
+                        <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
+                           <div className="w-full flex justify-center p-1">
+                              <p className="w-full flex items-center">
+                                 <BriefcaseBusiness className="w-4 h-4 mr-2 text-green-600" />
+                                 {res.personalInfo.experience.value}
+                              </p>
+                           </div>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
