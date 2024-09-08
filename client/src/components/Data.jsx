@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AlertCircle, CheckCircle, Github, Linkedin, Globe } from "lucide-react";
 
 const Data = ({}) => {
@@ -296,35 +296,44 @@ const Data = ({}) => {
    };
    const { res } = data;
 
+   const [open, setOpen] = useState({
+      
+   });
+
    return (
       <div className="max-w-4xl mx-auto p-6 bg-gray-200 w-full min-h-screen h-full rounded-3xl shadow-lg ">
-         <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-2xl font-semibold mb-4 text-red-600">Personal Information</h2>
-            <div className="grid grid-cols-2 gap-4">
-               <div>
-                  <p>
-                     <strong className="text-red-600">Name:</strong> {res.personalInfo.name.value}
-                  </p>
-                  <p>
-                     <strong className="text-red-600">Role:</strong> {res.personalInfo.role.value}
-                  </p>
-                  <p>
-                     <strong>Experience:</strong> {res.personalInfo.experience.value}
-                  </p>
-               </div>
-               <div>
-                  <p>
-                     <strong>Email:</strong> {res.personalInfo.email.value}
-                  </p>
-                  <p>
-                     <strong>Phone:</strong> {res.personalInfo.phone.value}
-                  </p>
-                  <p>
-                     <strong>Location:</strong> {res.personalInfo.location.value}
-                  </p>
+         <button onClick={""}>Open</button>
+         {"" && (
+            <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6">
+               <h2 className="text-2xl font-semibold mb-4 text-red-600">Personal Information</h2>
+               <div className="grid grid-cols-2 gap-4">
+                  <div>
+                     <p>
+                        <strong className="text-red-600">Name:</strong>{" "}
+                        {res.personalInfo.name.value}
+                     </p>
+                     <p>
+                        <strong className="text-red-600">Role:</strong>{" "}
+                        {res.personalInfo.role.value}
+                     </p>
+                     <p>
+                        <strong>Experience:</strong> {res.personalInfo.experience.value}
+                     </p>
+                  </div>
+                  <div>
+                     <p>
+                        <strong>Email:</strong> {res.personalInfo.email.value}
+                     </p>
+                     <p>
+                        <strong>Phone:</strong> {res.personalInfo.phone.value}
+                     </p>
+                     <p>
+                        <strong>Location:</strong> {res.personalInfo.location.value}
+                     </p>
+                  </div>
                </div>
             </div>
-         </div>
+         )}
 
          <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-6 ">
             <h2 className="text-2xl font-semibold mb-4">Overall Score</h2>
