@@ -55,7 +55,10 @@ const PersonalInfo = ({ personalInfo, isPersonalInfo }) => {
 
                   {personalInfo && (
                      <div className="flex items-start w-full gap-4 flex-wrap justify-between">
-                        <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
+                        <div
+                           className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full"
+                           title="Name"
+                        >
                            <div className="w-full flex justify-center p-1">
                               <p className="w-full flex items-center">
                                  <User className="w-4 h-4 mr-2 text-green-600" />
@@ -64,7 +67,7 @@ const PersonalInfo = ({ personalInfo, isPersonalInfo }) => {
                            </div>
                         </div>
                         <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
-                           <div className="w-full flex justify-center p-1">
+                           <div className="w-full flex justify-center p-1" title="Email">
                               <p className="w-full flex items-center">
                                  <Mail className="w-4 h-4 mr-2 text-green-600" />
                                  {personalInfo.email.value}
@@ -72,7 +75,7 @@ const PersonalInfo = ({ personalInfo, isPersonalInfo }) => {
                            </div>
                         </div>
                         <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
-                           <div className="w-full flex justify-center p-1">
+                           <div className="w-full flex justify-center p-1" title="Experience">
                               <p className="w-full flex items-center">
                                  <BriefcaseBusiness className="w-4 h-4 mr-2 text-green-600" />
                                  {personalInfo.experience.value}
@@ -80,7 +83,7 @@ const PersonalInfo = ({ personalInfo, isPersonalInfo }) => {
                            </div>
                         </div>
                         <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
-                           <div className="w-full flex justify-center p-1">
+                           <div className="w-full flex justify-center p-1" title="Location">
                               <p className="w-full flex items-center">
                                  <MapPin className="w-4 h-4 mr-2 text-green-600" />
                                  {personalInfo.location?.value || "N/A"}
@@ -88,7 +91,7 @@ const PersonalInfo = ({ personalInfo, isPersonalInfo }) => {
                            </div>
                         </div>
                         <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full">
-                           <div className="w-full flex justify-center p-1">
+                           <div className="w-full flex justify-center p-1" title="Phone">
                               <p className="w-full flex items-center">
                                  <Smartphone className="w-4 h-4 mr-2 text-green-600" />
                                  {personalInfo.phone?.value || "N/A"}
@@ -96,10 +99,10 @@ const PersonalInfo = ({ personalInfo, isPersonalInfo }) => {
                            </div>
                         </div>
                         <div className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md  w-full">
-                           <div className="w-full flex justify-center p-1">
+                           <div className="w-full flex justify-center p-1" title="Role">
                               <p className="w-full flex items-center">
                                  <UserCog className="w-4 h-4 mr-2 text-green-600" />
-                                 {personalInfo.phone?.value || "N/A"}
+                                 {personalInfo.role?.value || "N/A"}
                               </p>
                            </div>
                         </div>
