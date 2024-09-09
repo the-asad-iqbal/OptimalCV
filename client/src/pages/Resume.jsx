@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ScoreGauge from "../components/ScoreGauge";
 import Data from "../components/Data";
+import ScoreGaugeSkeleton from "../components/ScoreGaugeSkeleton";
 
 const Resume = () => {
    const { id } = useParams();
@@ -50,6 +51,7 @@ const Resume = () => {
                <div className="w-full h-[calc(100vh-80px)] bg-[#E3E9F5] rounded-3xl max-w-[350px] p-10 shadow-lg mx-auto flex items-start justify-center">
                   <div>
                      {audit.res && <ScoreGauge score={overAllScore} outOf={100} />}
+                     {audit && !audit.res && <ScoreGaugeSkeleton />}
                      <div>
                         <p className="text-lg font-normal">{interpretation}</p>
                      </div>
