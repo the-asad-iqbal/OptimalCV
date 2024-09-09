@@ -16,18 +16,18 @@ const Resume = () => {
             const data = await response.json();
             const { files } = data;
 
-            // const res = await fetch(`http://localhost:3000/api/v1/completion/create`, {
-            //    method: "POST",
-            //    headers: {
-            //       "Content-Type": "application/json",
-            //    },
-            //    body: JSON.stringify({ files }),
-            // });
+            const res = await fetch(`http://localhost:3000/api/v1/completion/create`, {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ files }),
+            });
 
-            // if (res.ok) {
-            //    const data = await res.json();
-            //    setAudit(data);
-            // }
+            if (res.ok) {
+               const data = await res.json();
+               setAudit(data);
+            }
          }
       } catch (error) {
          console.log(error);
@@ -36,15 +36,23 @@ const Resume = () => {
 
    useEffect(() => {
       handleGetResume();
+      console.log(audit);
    }, []);
+   console.log(audit.res?.overallScore.score);
+
+   const overAllScore = audit?.res?.overallScore?.score;
+   const interpretation = audit?.res?.overallScore?.interpretation;
+
    return (
       <div className="h-screen w-screen ">
          <div className="flex justify-between items-start max-w-7xl mx-auto ">
             <div className="max-w-[350px] w-full h-full min-h-screen flex flex-col items-center justify-center">
                <div className="w-full h-[calc(100vh-80px)] bg-[#E3E9F5] rounded-3xl max-w-[350px] p-10 shadow-lg mx-auto flex items-start justify-center">
                   <div>
-                     <ScoreGauge score={10} />
-                     <div></div>
+                     {audit.res && <ScoreGauge score={overAllScore} outOf={100} />}
+                     <div>
+                        <p className="text-lg font-normal">{interpretation}</p>
+                     </div>
                   </div>
                </div>
             </div>

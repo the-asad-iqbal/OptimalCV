@@ -2,6 +2,8 @@ import { PDFExtract } from "pdf.js-extract";
 import fs from "fs";
 
 const pdfToLink = (pdfPath) => {
+   console.log(pdfPath);
+   
    return new Promise((resolve, reject) => {
       const pdfExtract = new PDFExtract();
       const options = {};

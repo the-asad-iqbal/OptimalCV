@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
 
 const ScoreGauge = ({ score = 0, min = 0, max = 100 }) => {
+   console.log(score, min, max);
+   
    const percentage = ((score - min) / (max - min)) * 100;
    const fillPercentage = Math.min(percentage, 100);
 
