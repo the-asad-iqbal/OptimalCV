@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User, ChevronDown } from "lucide-react";
+import { LucideLinkedin, ChevronDown, LucideGitBranchPlus, Link, Rss } from "lucide-react";
 
 const Links = ({ Links, isLinks }) => {
    const [isOpen, setIsOpen] = useState(true);
@@ -8,7 +8,7 @@ const Links = ({ Links, isLinks }) => {
          <div className="flex flex-col">
             <div className="flex items-center justify-between content-center w-full">
                <h2 className="text-2xl font-semibold text-blue-600 w-full flex items-center gap-2">
-                  <User /> Links
+                  <Link /> Links
                </h2>
                <button
                   onClick={() => setIsOpen(!isOpen)}
@@ -53,7 +53,7 @@ const Links = ({ Links, isLinks }) => {
                            >
                               <div className="w-full flex justify-center p-1">
                                  <p className="w-full flex items-center">
-                                    <User className="w-4 h-4 mr-2 text-green-600" />
+                                    <LucideGitBranchPlus className="w-4 h-4 mr-2 text-green-600" />
                                     <a href={Links.github?.link} className="text-sm text-blue-600">
                                        {"Github"}
                                     </a>
@@ -68,12 +68,30 @@ const Links = ({ Links, isLinks }) => {
                            >
                               <div className="w-full flex justify-center p-1">
                                  <p className="w-full flex items-center">
-                                    <User className="w-4 h-4 mr-2 text-green-600" />
+                                    <LucideLinkedin className="w-4 h-4 mr-2 text-green-600" />
                                     <a
                                        href={Links.linkedIn?.link}
                                        className="text-sm text-blue-600"
                                     >
                                        {"linkedIn"}
+                                    </a>
+                                 </p>
+                              </div>
+                           </div>
+                        )}
+                        {Links.portofolio.isAvailable && (
+                           <div
+                              className="bg-white flex items-center px-2 py-1 border border-gray-300/80 max-w-64 rounded-lg shadow-md shadow-green-700/25 w-full"
+                              title="Portfolio"
+                           >
+                              <div className="w-full flex justify-center p-1">
+                                 <p className="w-full flex items-center">
+                                    <Rss className="w-4 h-4 mr-2 text-green-600" />
+                                    <a
+                                       href={Links.portofolio?.link}
+                                       className="text-sm text-blue-600"
+                                    >
+                                       {"Portofolio"}
                                     </a>
                                  </p>
                               </div>
