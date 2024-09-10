@@ -8,7 +8,6 @@ import { pdfToLink } from "../utils/pdfToLink.js";
 const createCompletion = async (req, res) => {
    try {
       const { files } = req.body;
-      console.log(files[0].pdfPath);
 
       if (!files) return res.status(400).json({ error: "No files provided" });
 
