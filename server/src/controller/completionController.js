@@ -226,28 +226,6 @@ const createCompletion = async (req, res) => {
                               },
                            },
                         },
-                        sectionLength: {
-                           type: SchemaType.ARRAY,
-                           items: {
-                              type: SchemaType.OBJECT,
-                              properties: {
-                                 section: { type: SchemaType.STRING },
-                                 wordCount: { type: SchemaType.NUMBER },
-                                 isAppropriate: { type: SchemaType.BOOLEAN },
-                              },
-                           },
-                        },
-                        sectionOrder: {
-                           type: SchemaType.ARRAY,
-                           items: {
-                              type: SchemaType.OBJECT,
-                              properties: {
-                                 section: { type: SchemaType.STRING },
-                                 isCorrectOrder: { type: SchemaType.BOOLEAN },
-                                 suggestedPosition: { type: SchemaType.NUMBER },
-                              },
-                           },
-                        },
                         missingImportantSections: {
                            type: SchemaType.ARRAY,
                            items: { type: SchemaType.STRING },
@@ -365,7 +343,6 @@ const createCompletion = async (req, res) => {
                      properties: {
                         score: { type: SchemaType.NUMBER },
                         scoreOutOf: { type: SchemaType.NUMBER },
-                        interpretation: { type: SchemaType.STRING },
                      },
                   },
                },
